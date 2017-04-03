@@ -2,19 +2,30 @@
 var db = require('../dbconnection');
 var express = require('express');
 var router = express.Router();
+var result = [];
 
 /* GET api listing. */
 // router.get('/', function (req, res) {
 //     res.send('api works');
 // });
 
+
 // Get all Expenses
 router.get('/expenseDetails', function (req, res) {
     // Get posts from the mock api
     // This should ideally be replaced with a service that connects to MongoDB
-    db.query("Select * from expenses", function (err, rows) {
+    result = [];
+    db.query("SELECT SUM(e.amount) as expense  FROM `expenses`  e  WHERE MONTH(e.date) = MONTH(CURDATE());SELECT SUM(i.amount) as income  FROM `income`  i  WHERE MONTH(i.date) = MONTH(CURDATE())", function (err, rows) {
         console.log(rows);
-        res.status(200).json(rows);
+        if (err) {
+            res.status(500).json(err);
+            return;
+        }
+        result.push(rows[0][0]);
+        result.push(rows[1][0]);
+        result = [].concat.apply([], result);
+        var dashBoard = Object.assign({}, result[0], result[1]);
+        res.status(200).json(dashBoard);
     });
 
 

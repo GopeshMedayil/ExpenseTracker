@@ -1,20 +1,29 @@
-<nav class="navbar  mynav navbar-toggleable-md navbar-dark secondary-color-dark">
-  Expense Manager
-</nav>
 <div class="container">
   <div class="dashboard-wrapper">
     <div class="row">
+      <div class="text-center">
+        <h3>{{month}}</h3>
+      </div>
+    </div>
+    {{data}}
+    <div class="alert alert-warning" *ngIf="!data">
+      No Income/Expenses found !
+    </div>
+    <div class="row" *ngIf="data">
       <div class="col-sm-6 col-md-6">
         <div class="income-container">
           <div class="card">
             <div class="row">
               <div class="col-sm-12 col-md-12">
-                <div class="card-header">Income</div>
+                <div class="card-header">
+                  <div class="" style="display:inline-block">Income</div>
+                  <div class="pull-right" style="display: inline-block; cursor: pointer;"><a class="pointer" routerLink="/addExpense">Add Income</a></div>
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-12">
-                <div class="card-block">$12000</div>
+                <div class="card-block">{{data.income}}</div>
               </div>
             </div>
           </div>
@@ -31,7 +40,7 @@
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-12">
-                <div class="card-block">$12000</div>
+                <div class="card-block">{{data.expense}}</div>
               </div>
             </div>
 
