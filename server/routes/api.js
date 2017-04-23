@@ -32,9 +32,21 @@ router.get('/expenseDetails', function (req, res) {
 });
 
 //Create Expense
-router.post('/createExpense', function (req, res) {
+router.post('/expenses', function (req, res) {
     if (req.body) {
         db.query('INSERT INTO expenses SET ?', req.body, function (err, result) {
+            if (err) {
+                res.status(500).json({ 'code': 500, 'message': err });
+            }
+            res.status(200).json(result);
+        });
+    }
+
+});
+
+router.get('/categories', function (req, res) {
+    if (req.body) {
+        db.query('SELECT * from categories WHERE category_type ="EXPENSE"', req.body, function (err, result) {
             if (err) {
                 res.status(500).json({ 'code': 500, 'message': "Cannot insert into database" });
             }
@@ -43,5 +55,7 @@ router.post('/createExpense', function (req, res) {
     }
 
 });
+
+
 
 module.exports = router;

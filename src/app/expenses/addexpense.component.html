@@ -1,1 +1,53 @@
-<h3>Create Expense</h3>
+<div class="container box">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Expenses</h3>
+
+                </div>
+                <div class="col-md-12">
+                    <form #expenseForm="ngForm" novalidate>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" class="form-control" #dateRef="ngModel" name="date" ngModel required>
+                            <div [hidden]="dateRef.valid || dateRef.pristine" class="alert alert-danger">
+                                Please select date
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" name="comments" #commentRef="ngModel" ngModel required>
+                            <div [hidden]="commentRef.valid || commentRef.pristine" class="alert alert-danger">
+                                Please enter a description
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control" name="amount" #amountRef="ngModel" ngModel required>
+                            <div [hidden]="amountRef.valid || amountRef.pristine" class="alert alert-danger">
+                                Please enter amount
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control" name="category_id" [ngModel]="category_id" required #categoryRef="ngModel">
+                                <option *ngFor="let category of categories" value="{{category.id}}">{{category.category_name}}</option>
+                            </select>
+                            <div [hidden]="categoryRef.valid || categoryRef.pristine" class="alert alert-danger">
+                                Please select category
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" [disabled]="!expenseForm.form.valid" class="btn btn-primary" value="Submit" (click)="createExpense(expenseForm.value)"
+                            />
+                        </div>
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
